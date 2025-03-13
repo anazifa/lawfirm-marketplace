@@ -18,8 +18,8 @@ interface MarketplaceProps {
 export default function MarketplacePage() {
   const { data: session } = useSession();
   const [lawyers, setLawyers] = useState<Lawyer[]>([]);
-  const [filters, setFilters] = useState({
-    category: '',
+  const [filters, setFilters] = useState<SearchFilters>({
+    practiceArea: '',
     priceRange: [0, 1000],
     rating: 0,
     location: '',
@@ -90,9 +90,9 @@ export default function MarketplacePage() {
             {/* Filters Sidebar */}
             <div className="lg:col-span-1">
               <CategoryFilter
-                selectedCategory={filters.category}
+                selectedCategory={filters.practiceArea}
                 onCategoryChange={(category) =>
-                  setFilters({ ...filters, category })
+                  setFilters({ ...filters, practiceArea: category })
                 }
               />
               <PriceFilter

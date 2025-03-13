@@ -43,7 +43,7 @@ export interface Booking {
 }
 
 export interface SearchFilters {
-  category?: string;
+  practiceArea?: string;
   priceRange?: [number, number];
   rating?: number;
   location?: string;
