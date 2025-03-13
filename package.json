@@ -31,13 +31,15 @@
     "date-fns": "^2.30.0",
     "react-datepicker": "^4.11.0",
     "@stripe/stripe-js": "^1.54.0",
-    "stripe": "^12.7.0"
-  },
-  "devDependencies": {
+    "stripe": "^12.7.0",
+    "next-auth": "^4.24.5",
+    "@next-auth/prisma-adapter": "^1.0.7",
     "@types/bcryptjs": "^2.4.2",
     "@types/jsonwebtoken": "^9.0.2",
-    "@types/react-datepicker": "^4.11.2",
-    "eslint": "8.41.0",
+    "@types/react-datepicker": "^4.11.2"
+  },
+  "devDependencies": {
+    "eslint": "^8.56.0",
     "eslint-config-next": "13.4.4"
   },
   "resolutions": {
