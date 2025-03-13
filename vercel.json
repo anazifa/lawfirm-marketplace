@@ -1,8 +1,13 @@
 {
   "version": 2,
-  "buildCommand": "npm run build",
-  "devCommand": "npm run dev",
-  "installCommand": "npm install",
-  "framework": "nextjs",
-  "outputDirectory": ".next"
+  "builds": [
+    {
+      "src": "package.json",
+      "use": "@vercel/next"
+    }
+  ],
+  "env": {
+    "NEXTAUTH_SECRET": "jXn2r5u8x/A?D(G+KbPeShVmYp3s6v9y",
+    "NEXTAUTH_URL": "https://lawfirm-marketplace.vercel.app"
+  }
 } 
