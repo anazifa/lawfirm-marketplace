@@ -1,10 +1,11 @@
+import { NextAuthOptions } from 'next-auth';
 import NextAuth from 'next-auth';
-import { PrismaAdapter } from '@next-auth/prisma-adapter';
 import CredentialsProvider from 'next-auth/providers/credentials';
+import { PrismaAdapter } from '@next-auth/prisma-adapter';
 import { prisma } from '@/lib/prisma';
-import { compare } from 'bcryptjs';
+import bcrypt from 'bcryptjs';
 
-export default NextAuth({
+export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma),
   providers: [
     CredentialsProvider({
@@ -15,23 +16,19 @@ export default NextAuth({
       },
       async authorize(credentials) {
         if (!credentials?.email || !credentials?.password) {
-          throw new Error('Please enter an email and password');
+          throw new Error('Missing credentials');
         }
 
         const user = await prisma.user.findUnique({
-          where: {
-            email: credentials.email
-          },
-          include: {
-            profile: true
-          }
+          where: { email: credentials.email },
+          include: { profile: true }
         });
 
         if (!user || !user.password) {
-          throw new Error('No user found');
+          throw new Error('Invalid credentials');
         }
 
-        const isValid = await compare(credentials.password, user.password);
+        const isValid = await bcrypt.compare(credentials.password, user.password);
 
         if (!isValid) {
           throw new Error('Invalid password');
@@ -58,9 +55,9 @@ export default NextAuth({
       return token;
     },
     async session({ session, token }) {
-      if (token) {
-        session.user.id = token.id;
-        session.user.role = token.role;
+      if (session.user) {
+        session.user.id = token.id as string;
+        session.user.role = token.role as string;
       }
       return session;
     }
@@ -71,4 +68,6 @@ export default NextAuth({
     error: '/auth/error'
   },
   secret: process.env.NEXTAUTH_SECRET
-}); 
+};
+
+export default NextAuth(authOptions); 
