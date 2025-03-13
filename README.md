@@ -112,3 +112,35 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## Support
 
 For support, email support@lawfirmmarketplace.com or open an issue in the repository. 
+
+## Deploying to Vercel
+
+To deploy your application to Vercel, follow these steps:
+
+1. Install Node.js first:
+   - Download Node.js from https://nodejs.org/
+   - Choose the LTS (Long Term Support) version
+   - Run the installer
+   - Make sure to check "Automatically install the necessary tools" during installation
+   - After installation, close and reopen your PowerShell window
+
+2. After installing Node.js, verify the installation by opening a new PowerShell window and running:
+   ```powershell
+   node --version
+   npm --version
+   ```
+
+3. Then install the Vercel CLI:
+   ```powershell
+   npm install -g vercel
+   ```
+
+4. Login to Vercel:
+   ```powershell
+   vercel login
+   ```
+
+5. Deploy your application:
+   ```powershell
+   vercel
+   ``` 

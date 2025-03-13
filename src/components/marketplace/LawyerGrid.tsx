@@ -1,20 +1,37 @@
-import { useState } from 'react';
+/// <reference types="react" />
+import React, { useState } from 'react';
+import type { FC } from 'react';
 import { Lawyer } from '@/types/marketplace';
 import { BookingModal } from './BookingModal';
-import { StarIcon, MapPinIcon, BriefcaseIcon } from '@heroicons/react/20/solid';
-import { BadgeCheckIcon } from '@heroicons/react/24/solid';
+import {
+  StarIcon,
+  MapPinIcon,
+  BriefcaseIcon,
+  ShieldCheckIcon
+} from '@heroicons/react/20/solid';
 
 interface LawyerGridProps {
-  lawyers: Lawyer[];
+  lawyers: Array<Lawyer>;
   isLoading: boolean;
-  userRole?: string;
+  userRole?: 'LAWYER' | 'CLIENT' | string;
+  onBookConsultation?: (bookingData: {
+    lawyerId: string;
+    date: Date;
+    time: string;
+    type: 'VIDEO' | 'PHONE' | 'IN_PERSON';
+  }) => Promise<void>;
 }
 
-export const LawyerGrid: React.FC<LawyerGridProps> = ({ lawyers, isLoading, userRole }) => {
+export const LawyerGrid: FC<LawyerGridProps> = ({ 
+  lawyers = [], 
+  isLoading = false, 
+  userRole,
+  onBookConsultation 
+}: LawyerGridProps) => {
   const [selectedLawyer, setSelectedLawyer] = useState<Lawyer | null>(null);
-  const [showBookingModal, setShowBookingModal] = useState(false);
+  const [showBookingModal, setShowBookingModal] = useState<boolean>(false);
 
-  const handleBooking = (lawyer: Lawyer) => {
+  const handleBooking = (lawyer: Lawyer): void => {
     setSelectedLawyer(lawyer);
     setShowBookingModal(true);
   };
@@ -41,18 +58,18 @@ export const LawyerGrid: React.FC<LawyerGridProps> = ({ lawyers, isLoading, user
   return (
     <>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {lawyers.map((lawyer) => (
+        {lawyers.map((lawyer: Lawyer) => (
           <div
             key={lawyer.id}
             className="bg-white rounded-lg shadow-lg overflow-hidden transition-transform hover:transform hover:scale-105"
           >
             <div className="relative">
               <img
-                src={lawyer.profileImage || '/default-avatar.png'}
-                alt={lawyer.name}
+                src={lawyer.profile.avatar || '/default-avatar.png'}
+                alt={`${lawyer.profile.firstName} ${lawyer.profile.lastName}`}
                 className="w-full h-48 object-cover"
               />
-              {lawyer.rating && lawyer.rating >= 4.5 && (
+              {lawyer.rating >= 4.5 && (
                 <div className="absolute top-4 right-4 bg-yellow-400 text-white px-3 py-1 rounded-full text-sm font-semibold">
                   Top Rated
                 </div>
@@ -61,39 +78,35 @@ export const LawyerGrid: React.FC<LawyerGridProps> = ({ lawyers, isLoading, user
 
             <div className="p-6">
               <div className="flex items-center justify-between mb-2">
-                <h3 className="text-xl font-semibold">{lawyer.name}</h3>
-                {lawyer.isVerified && (
-                  <BadgeCheckIcon className="h-6 w-6 text-blue-500" />
-                )}
+                <h3 className="text-xl font-semibold">
+                  {`${lawyer.profile.firstName} ${lawyer.profile.lastName}`}
+                </h3>
+                <ShieldCheckIcon className="h-6 w-6 text-blue-500" />
               </div>
 
               <div className="flex items-center mb-4">
-                {lawyer.rating && (
-                  <div className="flex items-center mr-4">
-                    <StarIcon className="h-5 w-5 text-yellow-400" />
-                    <span className="ml-1 text-gray-700">
-                      {lawyer.rating.toFixed(1)}
-                    </span>
-                    {lawyer.reviewCount && (
-                      <span className="ml-1 text-gray-500">
-                        ({lawyer.reviewCount})
-                      </span>
-                    )}
-                  </div>
-                )}
+                <div className="flex items-center mr-4">
+                  <StarIcon className="h-5 w-5 text-yellow-400" />
+                  <span className="ml-1 text-gray-700">
+                    {lawyer.rating.toFixed(1)}
+                  </span>
+                  <span className="ml-1 text-gray-500">
+                    ({lawyer.reviewCount})
+                  </span>
+                </div>
                 <div className="flex items-center text-gray-600">
                   <MapPinIcon className="h-5 w-5 mr-1" />
-                  {lawyer.location}
+                  {lawyer.profile.location}
                 </div>
               </div>
 
               <div className="mb-4">
-                {lawyer.practiceAreas.map((area, index) => (
+                {lawyer.profile.specialties.map((specialty: string, index: number) => (
                   <span
                     key={index}
                     className="inline-block bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-sm mr-2 mb-2"
                   >
-                    {area}
+                    {specialty}
                   </span>
                 ))}
               </div>
@@ -101,10 +114,10 @@ export const LawyerGrid: React.FC<LawyerGridProps> = ({ lawyers, isLoading, user
               <div className="flex items-center justify-between mb-4">
                 <div className="flex items-center text-gray-600">
                   <BriefcaseIcon className="h-5 w-5 mr-1" />
-                  {lawyer.experience} years exp.
+                  {lawyer.profile.experience} years exp.
                 </div>
                 <div className="text-2xl font-bold text-blue-600">
-                  ${lawyer.hourlyRate}/hr
+                  ${lawyer.profile.hourlyRate}/hr
                 </div>
               </div>
 
@@ -131,6 +144,7 @@ export const LawyerGrid: React.FC<LawyerGridProps> = ({ lawyers, isLoading, user
             setShowBookingModal(false);
             setSelectedLawyer(null);
           }}
+          onBook={onBookConsultation || (async () => {})}
         />
       )}
     </>

@@ -19,10 +19,11 @@ export default function MarketplacePage() {
   const { data: session } = useSession();
   const [lawyers, setLawyers] = useState<Lawyer[]>([]);
   const [filters, setFilters] = useState<SearchFilters>({
-    practiceArea: '',
+    practiceArea: undefined,
     priceRange: [0, 1000],
-    rating: 0,
-    location: '',
+    rating: undefined,
+    location: undefined,
+    experience: undefined
   });
   const [isLoading, setIsLoading] = useState(false);
 

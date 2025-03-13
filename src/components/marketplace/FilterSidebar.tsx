@@ -33,7 +33,7 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
               <input
                 type="checkbox"
                 className="form-checkbox h-5 w-5 text-blue-600"
-                checked={localFilters.practiceArea === area}
+                checked={localFilters?.practiceArea === area}
                 onChange={(e) =>
                   handleFilterUpdate({
                     practiceArea: e.target.checked ? area : undefined,
@@ -56,7 +56,7 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
             max="1000"
             step="50"
             className="w-full"
-            value={localFilters.priceRange?.[1] || 1000}
+            value={localFilters?.priceRange?.[1] ?? 1000}
             onChange={(e) =>
               handleFilterUpdate({
                 priceRange: [0, parseInt(e.target.value)],
@@ -65,7 +65,7 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
           />
           <div className="flex justify-between text-sm text-gray-600">
             <span>$0</span>
-            <span>${localFilters.priceRange?.[1] || 1000}</span>
+            <span>${localFilters?.priceRange?.[1] ?? 1000}</span>
           </div>
         </div>
       </div>
@@ -78,7 +78,7 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
             <button
               key={rating}
               className={`p-2 rounded ${
-                localFilters.rating === rating
+                localFilters?.rating === rating
                   ? 'bg-blue-600 text-white'
                   : 'bg-gray-100'
               }`}
@@ -95,8 +95,8 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
         <h3 className="text-lg font-semibold mb-4">Location</h3>
         <select
           className="w-full p-2 border rounded"
-          value={localFilters.location || ''}
-          onChange={(e) => handleFilterUpdate({ location: e.target.value })}
+          value={localFilters?.location ?? ''}
+          onChange={(e) => handleFilterUpdate({ location: e.target.value || undefined })}
         >
           <option value="">All Locations</option>
           {locations.map((location) => (
@@ -112,7 +112,7 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
         <h3 className="text-lg font-semibold mb-4">Minimum Experience</h3>
         <select
           className="w-full p-2 border rounded"
-          value={localFilters.experience || ''}
+          value={localFilters?.experience ?? ''}
           onChange={(e) =>
             handleFilterUpdate({
               experience: e.target.value ? parseInt(e.target.value) : undefined,
