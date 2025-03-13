@@ -1,0 +1,42 @@
+{
+  "name": "lawfirm-marketplace",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "next": "13.4.19",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "typescript": "5.0.4",
+    "@types/node": "20.2.5",
+    "@types/react": "18.2.7",
+    "@types/react-dom": "18.2.4",
+    "autoprefixer": "10.4.14",
+    "postcss": "8.4.23",
+    "tailwindcss": "3.3.2",
+    "@heroicons/react": "^2.0.18",
+    "axios": "^1.4.0",
+    "bcryptjs": "^2.4.3",
+    "jsonwebtoken": "^9.0.0",
+    "prisma": "^4.14.1",
+    "@prisma/client": "^4.14.1",
+    "react-hook-form": "^7.44.2",
+    "yup": "^1.2.0",
+    "date-fns": "^2.30.0",
+    "react-datepicker": "^4.11.0",
+    "@stripe/stripe-js": "^1.54.0",
+    "stripe": "^12.7.0"
+  },
+  "devDependencies": {
+    "@types/bcryptjs": "^2.4.2",
+    "@types/jsonwebtoken": "^9.0.2",
+    "@types/react-datepicker": "^4.11.2",
+    "eslint": "8.41.0",
+    "eslint-config-next": "13.4.4"
+  }
+} 
