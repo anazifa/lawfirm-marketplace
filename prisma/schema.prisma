@@ -10,9 +10,9 @@ datasource db {
 
 model User {
   id            String    @id @default(cuid())
-  email         String    @unique
-  username      String    @unique
-  password      String
+  email         String    faisalabdeli@gmail.com
+  username      String    anazifa
+  password      String    Desert2027!
   role          Role      @default(CLIENT)
   profile       Profile?
   createdAt     DateTime  @default(now())
