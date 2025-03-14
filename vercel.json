@@ -15,9 +15,5 @@
       "src": "/(.*)",
       "dest": "/$1"
     }
-  ],
-  "env": {
-    "NEXTAUTH_SECRET": "jXn2r5u8x/A?D(G+KbPeShVmYp3s6v9y",
-    "NEXTAUTH_URL": "https://lawfirm-marketplace.vercel.app"
-  }
+  ]
 } 
