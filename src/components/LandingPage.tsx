@@ -1,5 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import {
   UserGroupIcon,
   MagnifyingGlassIcon,
@@ -13,6 +14,8 @@ import {
   HandshakeIcon,
 } from '@heroicons/react/24/outline';
 
+const DEFAULT_IMAGE = 'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEAYABgAAD/2wBDAAgGBgcGBQgHBwcJCQgKDBQNDAsLDBkSEw8UHRofHh0aHBwgJC4nICIsIxwcKDcpLDAxNDQ0Hyc5PTgyPC4zNDL/2wBDAQkJCQwLDBgNDRgyIRwhMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjL/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAb/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCdABmX/9k=';
+
 const featuredLawyers = [
   {
     name: 'Ahmed Al-Saud',
@@ -21,7 +24,7 @@ const featuredLawyers = [
     specialty: 'Corporate Law',
     location: 'Riyadh',
     languages: ['Arabic', 'English'],
-    image: '/lawyers/ahmed.jpg',
+    image: DEFAULT_IMAGE,
   },
   {
     name: 'Fatima Al-Qahtani',
@@ -30,7 +33,7 @@ const featuredLawyers = [
     specialty: 'Family Law',
     location: 'Jeddah',
     languages: ['Arabic', 'English', 'French'],
-    image: '/lawyers/fatima.jpg',
+    image: DEFAULT_IMAGE,
   },
   {
     name: 'Mohammed Al-Harbi',
@@ -39,7 +42,7 @@ const featuredLawyers = [
     specialty: 'Commercial Law',
     location: 'Dammam',
     languages: ['Arabic', 'English'],
-    image: '/lawyers/mohammed.jpg',
+    image: DEFAULT_IMAGE,
   },
 ];
 
@@ -48,19 +51,19 @@ const testimonials = [
     text: "I found an excellent corporate lawyer through this platform. The process was smooth and the lawyer exceeded my expectations.",
     name: "Abdullah Al-Rashid",
     role: "Business Owner",
-    image: "/testimonials/abdullah.jpg"
+    image: DEFAULT_IMAGE
   },
   {
     text: "As a lawyer, this platform has helped me connect with clients who specifically need my expertise. It's been great for growing my practice.",
     name: "Layla Al-Zahrani",
     role: "Family Law Attorney",
-    image: "/testimonials/layla.jpg"
+    image: DEFAULT_IMAGE
   },
   {
     text: "The client request feature allowed me to describe my legal issue and receive proposals from several qualified lawyers.",
     name: "Khalid Al-Ghamdi",
     role: "Real Estate Developer",
-    image: "/testimonials/khalid.jpg"
+    image: DEFAULT_IMAGE
   }
 ];
 
@@ -187,7 +190,14 @@ export const LandingPage = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {featuredLawyers.map((lawyer, index) => (
               <div key={index} className="bg-white rounded-xl shadow-lg overflow-hidden">
-                <img src={lawyer.image} alt={lawyer.name} className="w-full h-48 object-cover" />
+                <div className="relative w-full h-48">
+                  <Image
+                    src={lawyer.image}
+                    alt={lawyer.name}
+                    fill
+                    style={{ objectFit: 'cover' }}
+                  />
+                </div>
                 <div className="p-6">
                   <h3 className="text-xl font-semibold mb-2">{lawyer.name}</h3>
                   <div className="flex items-center mb-2">
@@ -225,7 +235,14 @@ export const LandingPage = () => {
               <div key={index} className="bg-white p-6 rounded-xl shadow-lg">
                 <p className="text-gray-600 mb-6">"{testimonial.text}"</p>
                 <div className="flex items-center">
-                  <img src={testimonial.image} alt={testimonial.name} className="w-12 h-12 rounded-full mr-4" />
+                  <div className="relative w-12 h-12 rounded-full overflow-hidden mr-4">
+                    <Image
+                      src={testimonial.image}
+                      alt={testimonial.name}
+                      fill
+                      style={{ objectFit: 'cover' }}
+                    />
+                  </div>
                   <div>
                     <h4 className="font-semibold">{testimonial.name}</h4>
                     <p className="text-gray-600">{testimonial.role}</p>

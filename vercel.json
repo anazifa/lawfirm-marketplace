@@ -6,6 +6,12 @@
       "use": "@vercel/next"
     }
   ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "/"
+    }
+  ],
   "env": {
     "NEXTAUTH_SECRET": "jXn2r5u8x/A?D(G+KbPeShVmYp3s6v9y",
     "NEXTAUTH_URL": "https://lawfirm-marketplace.vercel.app"
